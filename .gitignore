@@ -1,0 +1,12 @@
+.bash_logout
+.bashrc
+.cache/
+.conda/
+.ipynb_checkpoints/
+.ipython/
+.local/
+.profile
+
+.DS_Store
+._*
+
