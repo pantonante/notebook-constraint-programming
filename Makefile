@@ -31,7 +31,7 @@ clean: remove
 image: DOCKER_ARGS?=
 image: IMAGE?=$(NAME)
 image: 
-	@docker build --rm $(DOCKER_ARGS) -t $(IMAGE) build/.
+	@docker build --rm $(DOCKER_ARGS) -t $(IMAGE) docker/.
 
 run: PORT?=8888
 run: NAME?=$(NAME)
