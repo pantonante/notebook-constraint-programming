@@ -1,31 +1,31 @@
-# 16.413 Project
+This folder contains supporting material for 16.413 final project.
 
-## Install
+## Prerequisites
 
-The easiest way to use this repository is to use `repo2docker`, if you choose to not use skip this section.
+* make 3.81+
+    * Ubuntu users: Be aware of [make 3.81 defect 483086](https://bugs.launchpad.net/ubuntu/+source/make-dfsg/+bug/483086) which exists in 14.04 LTS but is fixed in 15.04+
+* docker 1.9.0+
 
-### Prerequisites
+## Quickstart
 
-1. Docker to build & run the repositories. The [community edition](https://store.docker.com/search?type=edition&offering=community)
-   is recommended.
-2. Python 3.4+.
+1. Run `make image` to create the image
+2. Run `make run` to run and connect to the container
+3. Run `make stop` to stop the server
 
-### Install repo2docker
+Now open `work/index.ipynb`.
 
-It is raccomended to install it from source since the pip package is missing of some features:
+## Need more Python packages?
 
-```bash
-git clone https://github.com/jupyter/repo2docker.git
-cd repo2docker
-pip install -e .
-```
+Edit `requirements.txt` aadding any additional package you need.
 
-## Crete Docker container
+## Post build configuration
 
-To create the Docker container clone this repository in a folder of your choice, than run
+The bash script `postBuild.sh` is executed at the end of the build process. It is useful to enable notebook extension.
 
-```bash
-repo2docker -E project-16.413/.
-```
+## iMiniZinc
 
-Than connect to the running container. Note that the flag `-E` set up the editable mode so what you change in the Jupyter notebook is reflected in the local folder.
+[iMiniZinc](https://github.com/MiniZinc/iminizinc) module provides a cell magic extension for IPython/Jupyter notebooks and it's already configured to work on your notebook.
+
+## Uh ... make?
+
+Yes, sorry Windows users.
