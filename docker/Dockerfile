@@ -11,7 +11,7 @@ ARG BASE_CONTAINER=ubuntu:bionic-20180526@sha256:c8c275751219dadad8fa56b3ac41ca6
 FROM $BASE_CONTAINER AS builder
 
 # Retrieve MiniZinc IDE distribution
-ADD https://github.com/MiniZinc/MiniZincIDE/releases/download/2.2.3/MiniZincIDE-2.2.3-bundle-linux.tgz /minizinc.tgz
+ADD https://github.com/MiniZinc/MiniZincIDE/releases/download/2.2.3/MiniZincIDE-2.2.3-bundle-linux-x86_64.tgz /minizinc.tgz
 
 # Unpack compressed MiniZinc archive and renamed folder
 RUN tar -zxf /minizinc.tgz && \
