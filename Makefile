@@ -1,6 +1,7 @@
-.PHONY: help check clean remove image run stop
+.PHONY: help check clean image run stop
 
 NAME:=dockerzinc
+IMAGE:=dockerzinc
 
 define RUN_NOTEBOOK
 @echo "Starting notebook server" && sleep 3
@@ -9,9 +10,9 @@ define RUN_NOTEBOOK
 		-v $(shell pwd)/source:/home/jovyan/work \
 		$(DOCKER_ARGS) \
 		$(IMAGE) \
-		bash -c "chown jovyan /home/jovyan/work && jupyter trust /home/jovyan/work/index.ipynb && start-notebook.sh $(ARGS)" > /dev/null
+		#bash -c "chown jovyan /home/jovyan/work && jupyter trust /home/jovyan/work/index.ipynb && start-notebook.sh $(ARGS)" > /dev/null
 @echo "==> wait for server up ..." && sleep 3
-@docker exec -it $(IMAGE) /bin/bash -c "jupyter notebook list"
+@docker exec -it $(NAME) /bin/bash -c "jupyter notebook list"
 endef
 
 help:
@@ -20,23 +21,18 @@ help:
 check:
 	@which docker > /dev/null || (echo "ERROR: docker not found, please install (or run) docker"; exit 1)
 	@docker | grep volume > /dev/null || (echo "ERROR: docker 1.9.0+ required"; exit 1)
-	@docker image ls | grep $(NAME) > /dev/null || (echo "$(NAME) image not found"; exit 1)
-
-remove:
+	@docker image ls | grep $(IMAGE) > /dev/null || (echo "$(IMAGE) image not found"; exit 1)
 
 clean: remove
-	@docker rmi $(NAME) > /dev/null
+	@docker rmi $(IMAGE) &> /dev/null
 	@echo "Container and image deleted"
 
 image: DOCKER_ARGS?=
-image: IMAGE?=$(NAME)
 image: 
 	@docker build --rm $(DOCKER_ARGS) -t $(IMAGE) docker/.
 
 run: PORT?=8888
-run: NAME?=$(NAME)
-run: IMAGE?=$(NAME)
-run: check remove
+run: check 
 	$(RUN_NOTEBOOK)
 
 stop:
