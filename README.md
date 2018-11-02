@@ -12,8 +12,6 @@ This folder contains supporting material for 16.413 final project.
 2. Run `make run` to run and connect to the container
 3. Run `make stop` to stop the server
 
-Now open `work/index.ipynb`.
-
 ## Need more Python packages?
 
 Edit `requirements.txt` aadding any additional package you need.
