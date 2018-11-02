@@ -4,14 +4,14 @@ NAME:=dockerzinc
 IMAGE:=dockerzinc
 
 define RUN_NOTEBOOK
-@echo "Starting notebook server" && sleep 3
+@echo "Starting notebook server"
 @docker run --rm -d -p 127.0.0.1:8888:8888 \
 		--name $(NAME) \
 		-v $(shell pwd)/source:/home/jovyan/work \
 		$(DOCKER_ARGS) \
 		$(IMAGE) \
 		bash -c "chown jovyan /home/jovyan/work && jupyter trust /home/jovyan/work/*.ipynb && start-notebook.sh $(ARGS)" > /dev/null
-@echo "==> wait for server up ..." && sleep 3
+@echo "==> wait for server up ..." && sleep 2
 @docker exec -it $(NAME) /bin/bash -c "jupyter notebook list"
 endef
 
@@ -32,8 +32,8 @@ run: check
 	$(RUN_NOTEBOOK)
 
 stop:
-	@docker container rm -f $(NAME) > /dev/null
+	@docker container rm -f $(NAME) 2&> /dev/null || true
 
 clean: stop
-	@docker rmi $(IMAGE) > /dev/null
+	@docker rmi $(IMAGE) 2&> /dev/null || true
 	@echo "Container and image deleted"
