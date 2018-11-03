@@ -1,0 +1,15 @@
+version: '3'
+services:
+  dockerzinc:
+    build: 
+       context: ./docker
+       dockerfile: Dockerfile
+    container_name: dockerzinc
+    ports:
+      - "8888:8888"
+    volumes:
+      - "./source/:/home/jovyan/work"
+    command: >
+      bash -c 'chown jovyan /home/jovyan/work && 
+      jupyter trust /home/jovyan/work/*.ipynb && 
+      start-notebook.sh' > /dev/null
