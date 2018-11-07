@@ -7,8 +7,7 @@
 #------------------------------------------------------------------------------#
 # Setup MiniZinc base image
 
-ARG BASE_CONTAINER=ubuntu:bionic-20180526@sha256:c8c275751219dadad8fa56b3ac41ca6cb22219ff117ca98fe82b42f24e1ba64e
-FROM $BASE_CONTAINER AS builder
+FROM alpine:latest AS builder
 
 # Retrieve MiniZinc IDE distribution
 ADD https://github.com/MiniZinc/MiniZincIDE/releases/download/2.2.3/MiniZincIDE-2.2.3-bundle-linux-x86_64.tgz /minizinc.tgz
