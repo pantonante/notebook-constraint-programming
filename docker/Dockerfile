@@ -20,17 +20,22 @@ RUN tar -zxf /minizinc.tgz && \
 # Extend Jypiter Notebook image
 
 # Get image
-FROM jupyter/minimal-notebook:610bb8b938db
+FROM jupyter/base-notebook:a6fc0cfbd01b
 
 # Switch back to root
 USER root
 
 # Update Ubuntu and install necessary packages
-RUN apt-get update -y && apt-get install -y \
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
     vim \
     libharfbuzz0b \
     libpcre16-3 \
-    libgl1-mesa-glx
+    libgl1-mesa-glx \
+    libgeos-dev && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 # Copy unpacked MiniZinc installation from the build image
 COPY --from=builder /minizinc /minizinc
@@ -52,9 +57,6 @@ RUN fix-permissions /home/$NB_USER
 # Environment Variables
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_USER
-
-# Add FlatZinc solver absolute path
-ENV FZNEXEC="/entry_data/fzn-exec"
 
 # Add MiniZinc's binary path to PATH
 ENV PATH="/minizinc:/minizinc/bin:${PATH}"
