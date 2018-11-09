@@ -1,13 +1,19 @@
 import time
-from constraints import all_different
 
 
-class nqueens():
+def all_different(x):
+    """ Return True if all non-None values in x are different"""
+    seen = set()
+    return not any([i is not None and (i in seen or seen.add(i)) for i in x])
+
+
+class NQueens():
     def __init__(self, N):
         self.N = N
         self.assignment = [None] * self.N
         self.domain = [set(range(N))] * N
         self.consistency_checks = 0
+        self.visited_states = 0
 
     def is_solution(self):
         """ Check that the current instance is a solution """
@@ -17,9 +23,20 @@ class nqueens():
         """ Get domain of variable var """
         return self.domain[var]
 
-    def get_unassigned(self):
+    def get_unassigned(self, var_ordering=None):
         """ Return the first unassigned variable, None otherwise """
-        return next((var for var in range(self.N) if self.assignment[var] is None), None)
+        if var_ordering == 'smallest_domain':
+            # Note: mark with (N+1) an assigned variable
+            dom_sizes = [len(self.domain[i]) if self.assignment[i] is None else self.N + 1 \
+                         for i in range(self.N)]
+            min_index, min_value = min(enumerate(dom_sizes), key=lambda x: x[1])
+            if min_value == self.N+1:
+                return None
+            else:
+                return min_index
+        else: # first_unassigned
+            return next((var for var in range(self.N) if self.assignment[var] is None), None)
+
 
     def is_feasible(self):
         """ Check that the current instance satisfy all constraints """
@@ -35,6 +52,8 @@ class nqueens():
         Assign value to var and optionally apply arc concistency
         """
         self.assignment[var] = value
+        if value is not None:
+            self.visited_states += 1
         if with_pruning:
             return self.prune_domain(var, value)
         return self.domain
@@ -77,21 +96,12 @@ class nqueens():
     def restore_domain(self, domain):
         self.domain = domain.copy()
 
-    def print(self):
-        for col in range(self.N):
-            for row in range(self.N):
-                if self.assignment[col] == row:
-                    print('Q', end=' ')
-                else:
-                    print('-', end=' ')
-            print('')
 
-
-def backtrack(csp, with_forward_checking=False):
+def backtrack(csp, with_forward_checking=False, var_ordering='smallest_domain'):
     if csp.is_solution():
         return csp
 
-    var = csp.get_unassigned()
+    var = csp.get_unassigned(var_ordering)
     for val in csp.get_domain(var):
         pruned = csp.assign(var, val, with_forward_checking)
         if csp.is_feasible():
@@ -102,41 +112,8 @@ def backtrack(csp, with_forward_checking=False):
     csp.assign(var, None)
     return None
 
-def nqueens_backtracking(N):
-    start_time = time.time()
-    queens = backtrack(nqueens(N))
-    end_time = time.time()
-    return queens, (end_time - start_time)
-
-
-def nqueens_backtracking_fc(N):
-    start_time = time.time()
-    queens = backtrack(nqueens(N), True)
-    end_time = time.time()
-    return queens, (end_time - start_time)
-
-
-def main():
-    N = 12
-
-    queens, exec_time = nqueens_backtracking(N)
-    if queens is not None:
-        queens.print()
-        print("Solution found in %.2f seconds. Used %d consistency checks." \
-              % (exec_time, queens.consistency_checks))
-    else:
-        print("Inconsistent problem")
-
-    print('===============================================================')
-
-    queens, exec_time = nqueens_backtracking_fc(N)
-    if queens is not None:
-        queens.print()
-        print("Solution found in %.2f seconds. Used %d consistency checks." \
-              % (exec_time, queens.consistency_checks))
-    else:
-        print("Inconsistent problem")
-
-
-if __name__ == "__main__":
-    main()
+def nqueens_backtracking(n, with_forward_checking=False, var_ordering=None):
+  start_time = time.time()
+  queens = backtrack(NQueens(n))
+  end_time = time.time()
+  return queens, (end_time - start_time)

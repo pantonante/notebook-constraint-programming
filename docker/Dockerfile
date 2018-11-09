@@ -18,7 +18,6 @@ RUN tar -zxf /minizinc.tgz && \
 
 #------------------------------------------------------------------------------#
 # Extend Jypiter Notebook image
-
 # Get image
 FROM jupyter/base-notebook:a6fc0cfbd01b
 
@@ -29,7 +28,6 @@ USER root
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
     build-essential \
-    vim \
     libharfbuzz0b \
     libpcre16-3 \
     libgl1-mesa-glx \
@@ -52,6 +50,13 @@ RUN pip install --requirement /tmp/requirements.txt && \
 ADD postBuild.sh /tmp/
 RUN /bin/sh /tmp/postBuild.sh
 RUN fix-permissions /home/$NB_USER
+
+#------------------------------------------------------------------------------#
+# Cleaning up packages
+RUN apt-get purge -y build-essential &&\
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 #------------------------------------------------------------------------------#
 # Environment Variables
