@@ -116,15 +116,16 @@ def us_map_coloring(colors, optimize=False):
 
     if collector.SolutionCount() > 0:
       best_solution = collector.SolutionCount() - 1
-      print("Num. colors:", collector.Value(best_solution, max_color) + 1)
+      num_colors = collector.Value(best_solution, max_color) + 1
+      print("Num. colors:", num_colors)
       # print("x:", [collector.Value(best_solution, x[i]) for i in V])
       # print()
       map_colors = dict()
       for i in V:
         map_colors[state_names[i]] = colors[collector.Value(best_solution, x[i])]
-      return map_colors
+      return map_colors, num_colors
     else:
-      return None
+      return None, 0
       
 def nqueens(n):
   solver = pywrapcp.Solver("n Queens")
@@ -153,7 +154,7 @@ def nqueens(n):
 
   if collector.SolutionCount()<1:
     return None
-    
+
   solutions = []
   for i in range(collector.SolutionCount()):
     solutions.append([collector.Value(i, q[j]) for j in range(n)])
