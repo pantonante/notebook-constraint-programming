@@ -43,8 +43,8 @@ def draw_nqueens(solutions):
       .attr("height", boardSize + "px");
     
     // loop through 8 rows and 8 columns to draw the chess board
-    for (let i = 0; i < 12; i++) {
-      for (let j = 0; j < 12; j++) {
+    for (let i = 0; i < boardDimension; i++) {
+      for (let j = 0; j < boardDimension; j++) {
         // draw each chess field
         const box = svg.append("rect")
           .attr("x", i * boxSize)
