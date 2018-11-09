@@ -15,7 +15,7 @@ def draw_nqueens(solutions):
   solution_js = '[' + ','.join(str(x) for x in solution) + ']'
   chessboard_id = 'chessboard_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
 
-  display(HTML("""<div id = "%s"></div>""" % chessboard_id))
+  display(HTML("""<div style="text-align:center;" id="%s"></div>""" % chessboard_id))
   if len(solutions)>1:
     display(HTML("Together with %d other solutions." % (len(solutions)-1)))
 
