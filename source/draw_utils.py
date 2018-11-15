@@ -19,7 +19,8 @@ def draw_nqueens(solutions):
   if len(solutions)>1:
     display(HTML("Together with %d other solutions." % (len(solutions)-1)))
 
-  draw_board_js = """ require['d3'];
+  draw_board_js = """
+    require(["d3"], function(d3){ });
     const queen = {
       name: "queen",
       w: "\u2655",
@@ -74,7 +75,8 @@ def draw_nqueens(solutions):
             .text(queen.b);
         }
       }
-    } """ % (len(solution), solution_js, chessboard_id)
+    } 
+    """ % (len(solution), solution_js, chessboard_id)
 
   display(Javascript(draw_board_js))
 

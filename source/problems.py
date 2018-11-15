@@ -1,5 +1,5 @@
 import sys
-from IPython.display import HTML
+# from IPython.display import HTML
 from ortools.constraint_solver import pywrapcp
 
 def us_map_coloring(colors, optimize=False):
@@ -67,7 +67,6 @@ def us_map_coloring(colors, optimize=False):
     num_colors = len(colors)
     # set of nodes
     V = range(n)
-
 
     solver = pywrapcp.Solver('Map coloring')
 
@@ -160,6 +159,41 @@ def nqueens(n):
     solutions.append([collector.Value(i, q[j]) for j in range(n)])
   return solutions
 
+# def nqueens_matrix(n):
+#   def var_idx(i, j):
+#     return n*j+i
+#   solver = pywrapcp.Solver("n Queens Matrix")
+
+#   # declare variables
+#   q = [solver.IntVar(0, 1, "x%i" % i) for i in range(n*n)]
+
+#   # Constraints
+#   for i in range(n):
+#     solver.Add(solver.AllDifferent( [q[var_idx(i,j)] for j in range(n)] ))
+#     solver.Add(solver.AllDifferent( [q[var_idx(j,i)] for j in range(n)] ))
+
+#   for d in range(2, 2*n - 1):
+#     solver.Add(solver.AllDifferent( [q[var_idx(i, d-i)]    for i in range(n) if d-i >= 0 and d-i <= n-1] ))
+#     solver.Add(solver.AllDifferent( [q[var_idx(n-i, d-i)]  for i in range(n) if d-i >= 0 and d-i <= n-1] ))
+    
+#   # solution and search
+#   solution = solver.Assignment()
+#   solution.Add([q[i] for i in range(n)])
+
+#   # Collector to get all solutions
+#   collector = solver.AllSolutionCollector(solution)
+
+#   solver.Solve(
+#     solver.Phase([q[i] for i in range(n)], solver.INT_VAR_SIMPLE,
+#                 solver.ASSIGN_MIN_VALUE), [collector])
+
+#   if collector.SolutionCount()<1:
+#     return None
+
+#   solutions = []
+#   for i in range(collector.SolutionCount()):
+#     solutions.append([collector.Value(i, q[j]) for j in range(n)])
+#   return solutions
 
 if __name__ == '__main__':
   # colors = [
@@ -175,5 +209,6 @@ if __name__ == '__main__':
   # '#d21f3c' #raspberry
   # ]
   # map_colors = us_map_coloring(colors, optimize=True)
+
   sols = nqueens(4)
   print(sols)
