@@ -7,18 +7,8 @@ from matplotlib.patches import Polygon
 import random
 import string
 
-
-def draw_nqueens(solutions):
-  if solutions is None:
-     display(HTML("The problem has no solutions"))
-  solution = solutions[0]
+def draw_board(solution, chessboard_id):
   solution_js = '[' + ','.join(str(x) for x in solution) + ']'
-  chessboard_id = 'chessboard_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
-
-  display(HTML("""<div style="text-align:center;" id="%s"></div>""" % chessboard_id))
-  if len(solutions)>1:
-    display(HTML("Together with %d other solutions." % (len(solutions)-1)))
-
   draw_board_js = """
     require(["d3"], function(d3){ });
     const queen = {
@@ -79,6 +69,26 @@ def draw_nqueens(solutions):
     """ % (len(solution), solution_js, chessboard_id)
 
   display(Javascript(draw_board_js))
+
+def draw_nqueens(solutions, all_solutions=False):
+  if solutions is None:
+     display(HTML("The problem has no solutions"))
+  
+  if all_solutions:
+    chessboard_ids = ['chessboard_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6)) for sol in solutions]
+    divs = ""
+    for chessboard_id in chessboard_ids:
+      divs += """<div style="float:left;padding: 2em 2em;" id="%s"></div>""" % chessboard_id
+    display(HTML(divs))
+    for i in range(len(solutions)):
+      draw_board(solutions[i], chessboard_ids[i])
+  else:
+    solution = solutions[0]
+    chessboard_id = 'chessboard_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+    display(HTML("""<div style="text-align:center;" id="%s"></div>""" % chessboard_id))
+    draw_board(solution, chessboard_id)
+    if not all_solutions and len(solutions)>1:
+      display(HTML("Together with %d other solutions." % (len(solutions)-1)))
 
 def draw_us_map(map_colors):
   import matplotlib.pyplot as plt
