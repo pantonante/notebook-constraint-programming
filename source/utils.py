@@ -1,6 +1,6 @@
 from IPython.display import display, Javascript
 
-def autoupdate_cells(btn):
+def autoupdate_cells(btn=None):
   js =  """
   function findCellIndicesByTag() {
     return Jupyter.notebook.get_cells().filter(function(cell) {

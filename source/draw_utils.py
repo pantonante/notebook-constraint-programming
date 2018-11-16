@@ -10,7 +10,6 @@ import string
 def draw_board(solution, chessboard_id):
   solution_js = '[' + ','.join(str(x) for x in solution) + ']'
   draw_board_js = """
-    require(["d3"], function(d3){ });
     const queen = {
       name: "queen",
       w: "\u2655",
