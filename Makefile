@@ -20,7 +20,7 @@ help:
 
 check:
 	@which docker > /dev/null || (echo "ERROR: docker not found, please install (or run) docker"; exit 1)
-	@docker | grep volume > /dev/null || (echo "ERROR: docker 1.9.0+ required"; exit 1)
+	@docker 2>&1 | grep volume > /dev/null || (echo "ERROR: docker 1.9.0+ required"; exit 1)
 
 image: DOCKER_ARGS?=
 image: 
