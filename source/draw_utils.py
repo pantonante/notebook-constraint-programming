@@ -110,11 +110,12 @@ def draw_us_map(map_colors):
   for shape_dict in map.states_info:
     state_names.append(shape_dict['NAME'])
   ax = plt.gca()  # get current axes instance
-  # assign colors
-  for state in map_colors:
-    seg = map.states[state_names.index(state)]
-    color = map_colors[state]
-    poly = Polygon(seg, facecolor=color, edgecolor=color)
-    ax.add_patch(poly)
+  # assign colors   
+  for nshape,seg in enumerate(map.states):
+    # skip DC and Puerto Rico.
+    if state_names[nshape] not in ['District of Columbia','Puerto Rico']:
+      color = map_colors[state_names[nshape]]
+      poly = Polygon(seg, facecolor=color, edgecolor=color)
+      ax.add_patch(poly)
 
   plt.show()
