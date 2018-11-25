@@ -114,6 +114,6 @@ def backtrack(csp, with_forward_checking=False, var_ordering='smallest_domain'):
 
 def nqueens_backtracking(n, with_forward_checking=False, var_ordering=None):
   start_time = time.time()
-  queens = backtrack(NQueens(n))
+  queens = backtrack(NQueens(n), with_forward_checking, var_ordering)
   end_time = time.time()
   return queens, (end_time - start_time)
