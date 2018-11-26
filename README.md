@@ -28,3 +28,12 @@ You can also use the makefile to build, run and stop the container
 1. Run `make image` to create the image
 2. Run `make run` to run and connect to the container
 3. Run `make stop` to stop the server
+
+## Authors
+
+- [Pasquale Antonante](mailto:antonap@mit.edu)
+- [Parker Lusk](https://github.com/plusk01)
+
+## License
+
+[MIT](LICENSE)
