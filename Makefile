@@ -7,10 +7,10 @@ define RUN_NOTEBOOK
 @echo "Starting notebook server"
 @docker run --rm -d -p 127.0.0.1:8888:8888 \
 		--name $(NAME) \
-		-v $(shell pwd)/source:/home/jovyan/work \
+		-v $(shell pwd)/source:/home/jovyan/ConstraintProgramming \
 		$(DOCKER_ARGS) \
 		$(IMAGE) \
-		bash -c "chown jovyan /home/jovyan/work && jupyter trust /home/jovyan/work/*.ipynb && start-notebook.sh $(ARGS)" > /dev/null
+		bash -c "chown jovyan /home/jovyan/ConstraintProgramming && jupyter trust /home/jovyan/ConstraintProgramming/*.ipynb && start-notebook.sh $(ARGS)" > /dev/null
 @echo "==> wait for server up ..." && sleep 2
 @docker exec -it $(NAME) /bin/bash -c "jupyter notebook list"
 endef

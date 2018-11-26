@@ -8,8 +8,8 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - "./source/:/home/jovyan/work"
+      - "./source/:/home/jovyan/ConstraintProgramming"
     command: >
-      bash -c 'chown jovyan /home/jovyan/work && 
-      jupyter trust /home/jovyan/work/*.ipynb && 
+      bash -c 'chown jovyan /home/jovyan/ConstraintProgramming && 
+      jupyter trust /home/jovyan/ConstraintProgramming/*.ipynb && 
       start-notebook.sh' > /dev/null
