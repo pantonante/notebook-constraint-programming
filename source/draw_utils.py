@@ -87,7 +87,7 @@ def draw_nqueens(solutions, all_solutions=False):
     display(HTML("""<div style="text-align:center;" id="%s"></div>""" % chessboard_id))
     draw_board(solution, chessboard_id)
     if not all_solutions and len(solutions)>1:
-      display(HTML("Together with %d other solutions." % (len(solutions)-1)))
+      display(HTML("Together with %d other solution%s." % (len(solutions)-1, "s" if (len(solutions)-1) > 1 else "")))
 
 def draw_us_map(map_colors):
   import matplotlib.pyplot as plt

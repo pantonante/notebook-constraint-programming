@@ -59,6 +59,10 @@ RUN apt-get purge -y build-essential &&\
     rm -rf /var/lib/apt/lists/*
 
 #------------------------------------------------------------------------------#
+# Removing work directory
+RUN rm -rf /home/jovyan/work
+
+#------------------------------------------------------------------------------#
 # Environment Variables
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_USER

@@ -5,7 +5,7 @@ IMAGE:=dockerzinc
 
 define RUN_NOTEBOOK
 @echo "Starting notebook server"
-@docker run --rm -d -p 127.0.0.1:8888:8888 \
+@docker run --rm -d --cpus 0 -p 127.0.0.1:8888:8888 \
 		--name $(NAME) \
 		-v $(shell pwd)/source:/home/jovyan/ConstraintProgramming \
 		$(DOCKER_ARGS) \
@@ -34,6 +34,6 @@ run: check
 stop:
 	@docker container rm -f $(NAME) 2&> /dev/null || true
 
-clean: stop
+clean: check stop
 	@docker rmi $(IMAGE) 2&> /dev/null || true
 	@echo "Container and image deleted"

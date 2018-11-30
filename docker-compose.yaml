@@ -5,6 +5,10 @@ services:
        context: ./docker
        dockerfile: Dockerfile
     container_name: dockerzinc
+    deploy:
+      resources:
+        limits:
+          cpus: "0"
     ports:
       - "8888:8888"
     volumes:

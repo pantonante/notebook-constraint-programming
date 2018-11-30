@@ -13,7 +13,8 @@ Please use the docker container to enable all the functionalities.
 
 ### Using Docker-compose
 
-Run `docker-compose up` and connect to the container! :clap:
+1. Run `docker-compose up` to build and connect to the container! :clap:
+2. Run `docker-compose down` to stop the container
 
 ### Using Makefile
 
@@ -21,7 +22,7 @@ You can also use the makefile to build, run and stop the container
 
 1. Run `make image` to create the image
 2. Run `make run` to run and connect to the container
-3. Run `make stop` to stop the server
+3. Run `make stop` to stop the container
    
 ## Extend the Docker container
 
@@ -35,7 +36,7 @@ The bash script `postBuild.sh` is executed at the end of the build process. It i
 
 ## Authors
 
-- [Pasquale Antonante](mailto:antonap@mit.edu)
+- [Pasquale Antonante](https://github.com/pantonante)
 - [Parker Lusk](https://github.com/plusk01)
 
 ## License
